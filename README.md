@@ -1,15 +1,15 @@
-<img src="images/logo_new.png" alt="Massive" width="100%"/>
+<img src="images/logo_new.png" alt="Massive Market Data" width="100%"/>
 
-# Massive Codex Plugin
+# Massive Market Data Codex Plugin
 
-This plugin helps Codex and similar coding assistants build or debug Massive API integrations correctly. It ships Massive-specific guidance and reusable workflows, then pairs with the Massive MCP server (installed separately) for live API grounding.
+A Codex plugin for building and debugging Massive market data integrations. It packages Massive API guidance and reusable workflows, with optional live endpoint verification through the separately installed Massive MCP server.
 
-## What ships
+## Included
 
-When you install this plugin, Codex gets:
+The plugin includes:
 
-- **Stable Massive coding guidance via `AGENTS.md`.** Ticker formats, SDK naming, pagination behavior, auth patterns, plan tiers, and common pitfalls.
-- **Five focused skills.**
+- **Massive API guidance via `AGENTS.md`.** Ticker formats, SDK naming, pagination behavior, auth patterns, plan tiers, and common pitfalls.
+- **Five focused workflows.**
 
 | Skill | Use it for |
 |---|---|
@@ -19,27 +19,27 @@ When you install this plugin, Codex gets:
 | `massive-options` | Build options strategies and analysis projects using Massive options data. |
 | `massive-dashboard` | Scaffold a Streamlit dashboard backed by Massive APIs. |
 
-When paired with the [Massive MCP server](https://github.com/massive-com/mcp_massive) (installed separately, see Install below), Codex also gets three live tools — `search_endpoints`, `call_api`, `query_data` — for endpoint discovery, live calls, and SQL over stored DataFrames. Skills reference these tools in their `allowed-tools` list as optional capabilities; they degrade gracefully when the MCP server isn't registered and fall back to AGENTS.md knowledge.
+When paired with the [Massive MCP server](https://github.com/massive-com/mcp_massive) (installed separately, see Install below), Codex can use three live tools, `search_endpoints`, `call_api`, and `query_data`, for endpoint discovery, live calls, and SQL over stored DataFrames. The workflows list these tools as optional capabilities; without the MCP server, they fall back to the repo guidance in `AGENTS.md`.
 
-## How it stays accurate
+## Accuracy Model
 
-This plugin is set up so Codex relies less on memory and more on real Massive sources:
+This repo separates stable integration guidance from live endpoint metadata:
 
 - Use `plugins/massive/AGENTS.md` for stable facts that do not change often.
 - Use the Massive MCP server (when registered) for current endpoint, parameter, and response-shape details instead of relying on memory.
-- If live endpoint lookup is unavailable, the skills should say so rather than inventing current routes, fields, or plan access details.
+- If live endpoint lookup is unavailable, workflows should say so rather than inventing current routes, fields, or plan access details.
 - Skill names are prefixed with `massive-` to reduce selector collisions with other plugins' generic skills.
 
-## When it helps
+## Common Workflows
 
-Use this when you want the coding assistant to help with implementation, not just answer questions.
+Use this plugin when implementation details matter:
 
-- Use it to help generate Massive client code that matches the real SDK and API surface.
-- Use it to pick the right endpoint and parameters for a feature before writing application code.
-- Use it to debug 401, 403, 404, rate limit, pagination, and empty-result problems faster.
-- Use it to validate assumptions against live Massive tooling when response fields or endpoint behavior matter.
+- Generate Massive client code that matches the real SDK and API surface.
+- Pick the right endpoint and parameters for a feature before writing application code.
+- Debug 401, 403, 404, rate limit, pagination, and empty-result problems.
+- Validate assumptions against live Massive tooling when response fields or endpoint behavior matter.
 
-The point is not "show live prices in Codex." The point is to help the coding assistant write and debug Massive integrations more reliably.
+This is an integration-development plugin. Runtime market data access comes through your Massive API key and optional MCP registration.
 
 ## Install
 
@@ -47,7 +47,7 @@ Validated on `2026-04-23` with `codex-cli 0.123.0`.
 
 ### 1. Install the Massive MCP server (optional)
 
-For live-API grounding, install the [Massive MCP server](https://github.com/massive-com/mcp_massive) once as a shared `uv` tool. It's reused across Codex, Claude Code, and any other MCP-aware harness:
+For live endpoint verification, install the [Massive MCP server](https://github.com/massive-com/mcp_massive) once as a shared `uv` tool. It's reused across Codex, Claude Code, and any other MCP-aware harness:
 
 ```bash
 uv tool install git+https://github.com/massive-com/mcp_massive
@@ -60,10 +60,14 @@ Skip steps 1 and 2 if you don't need live-API features. The plugin's knowledge a
 ### 2. Register the MCP server with Codex (optional)
 
 ```bash
-codex mcp add massive --env MASSIVE_API_KEY=your_api_key -- mcp_massive
+read -rsp "Massive API key: " MASSIVE_API_KEY; echo
+codex mcp add massive --env MASSIVE_API_KEY="$MASSIVE_API_KEY" -- mcp_massive
+unset MASSIVE_API_KEY
 ```
 
 This writes the server entry into `~/.codex/config.toml`. The key persists across shells and reboots. Rotate the key later with `codex mcp remove massive` followed by the same `add` command with the new value.
+
+The plugin itself does not prompt for or store a Massive API key during install. Live API features use the separately registered MCP server and its `MASSIVE_API_KEY` environment value.
 
 ### 3. Install the plugin
 
@@ -76,17 +80,17 @@ codex plugin marketplace add github.com/massive-com/codex-plugin
 For local development from a checkout of this repo:
 
 ```bash
-codex plugin marketplace add /path/to/codex-plugin
+codex plugin marketplace add .
 ```
 
-Then restart Codex, open the plugin browser with `/plugins`, and install `Massive` from the `Massive` marketplace.
+Then restart Codex, open the plugin browser with `/plugins`, and install `Massive Market Data` from the `Massive Market Data` marketplace.
 
 ### 4. Verify
 
 Inside a Codex session:
 
 - Invoke a skill: `Use $massive-discover to find the right Massive endpoint for daily AAPL aggregates in Python.`
-- If MCP is registered, Codex grounds its answer against the live server via `search_endpoints`.
+- If MCP is registered, Codex verifies endpoint metadata against the live server via `search_endpoints`.
 - If MCP is not registered, Codex answers from AGENTS.md knowledge and notes that it couldn't verify the latest metadata.
 
 ## Quick smoke test
@@ -97,6 +101,10 @@ After install, try prompts like:
 - `Use $massive-scaffold to create a new Massive project. Args: demo rest python`
 - `Use $massive-debug to diagnose a Massive API error or unexpected response.`
 - `Build a Massive integration for daily aggregates in TypeScript and verify the endpoint and fields before writing the code.`
+
+## Store readiness
+
+The manifest includes the install-surface metadata documented by OpenAI Codex plugins: display copy, website/privacy/terms links, default prompts, brand color, a composer icon, and the black Massive wordmark logo. A white wordmark variant is also stored in `plugins/massive/assets/` for future dark-surface use. Real screenshots should be added under `plugins/massive/assets/` and referenced from `plugins/massive/.codex-plugin/plugin.json` once you have screenshots that show Massive Market Data in use.
 
 ## Local development note
 

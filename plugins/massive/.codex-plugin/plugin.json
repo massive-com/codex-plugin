@@ -1,7 +1,7 @@
 {
   "name": "massive",
   "version": "0.1.0",
-  "description": "AI coding helper for building correct Massive API integrations faster. Loads grounded SDK knowledge and five focused skills (scaffold, discover, debug, options, dashboard). Pairs with the Massive MCP server (installed separately) for live API grounding.",
+  "description": "Codex plugin for building Massive market data integrations. Includes SDK setup guidance, endpoint discovery workflows, debugging checklists, options workflows, and dashboard scaffolding. Can use the separately installed Massive MCP server for live endpoint verification.",
   "author": {
     "name": "Massive",
     "email": "support@massive.com",
@@ -23,9 +23,9 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Massive",
-    "shortDescription": "Build correct Massive integrations faster with AI help",
-    "longDescription": "Helps Codex and other AI coding workflows produce more reliable Massive integrations by combining stable SDK guidance, live endpoint grounding through MCP, and focused skills for scaffolding, discovery, debugging, options workflows, and dashboards.",
+    "displayName": "Massive Market Data",
+    "shortDescription": "Build and debug Massive market data integrations",
+    "longDescription": "Codex workflows for Massive API projects: SDK setup, endpoint selection, auth and response debugging, options analysis, and Streamlit dashboard scaffolding. When the Massive MCP server is registered, workflows can verify current endpoint metadata and run live API checks.",
     "developerName": "Massive",
     "category": "Developer Tools",
     "capabilities": [
@@ -36,12 +36,13 @@
     "privacyPolicyURL": "https://massive.com/legal/privacy",
     "termsOfServiceURL": "https://massive.com/legal/terms",
     "defaultPrompt": [
-      "Use $massive-scaffold to create a new Massive project with the right SDK and .env setup.",
-      "Use $massive-discover to find the right Massive endpoint and show SDK usage for the target language.",
-      "Use $massive-debug to diagnose a Massive API or SDK issue without guessing current endpoint details."
+      "Use $massive-scaffold to bootstrap a Massive API project with SDK dependencies and environment setup.",
+      "Use $massive-discover to identify the Massive endpoint, parameters, and SDK call for a market data task.",
+      "Use $massive-debug to troubleshoot a Massive API or SDK issue, including auth, plan access, pagination, and response-shape problems."
     ],
+    "brandColor": "#1E63F5",
     "composerIcon": "./assets/icon.png",
-    "logo": "./assets/icon.png",
+    "logo": "./assets/logo-black.svg",
     "screenshots": []
   }
 }

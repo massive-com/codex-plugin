@@ -1,7 +1,7 @@
 {
   "name": "massive-codex-plugin",
   "interface": {
-    "displayName": "Massive"
+    "displayName": "Massive Market Data"
   },
   "plugins": [
     {
@@ -12,7 +12,7 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_USE"
       },
       "category": "Developer Tools"
     }
