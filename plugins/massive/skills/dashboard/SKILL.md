@@ -1,12 +1,14 @@
 ---
-name: dashboard
-description: Scaffold a Streamlit-based financial dashboard using Massive APIs. Use when building market data visualizations, multi-asset dashboards, or real-time monitoring interfaces.
+name: massive-dashboard
+description: Scaffold a Streamlit-based financial dashboard using Massive APIs. Use when building Massive-backed market data visualizations, multi-asset dashboards, or monitoring interfaces. Do not use for dashboards unrelated to Massive.
 ---
 
 # Scaffold a Streamlit financial dashboard
 
 Project name: $0 (default: `dashboard` if not specified)
 Focus area: $1 (default: `multi-asset` if not specified)
+
+Prefer SDK-backed data access and cached helper functions. Do not add raw HTTP calls when the Massive SDK already covers the workflow.
 
 ## Brand rules (apply to ALL generated files)
 

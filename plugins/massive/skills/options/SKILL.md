@@ -1,6 +1,6 @@
 ---
-name: options
-description: Build and analyze options strategies using Massive's options data. Supports covered calls, iron condors, spreads, and custom strategies. Use when building options screeners, analyzing Greeks, or constructing multi-leg strategies.
+name: massive-options
+description: Build and analyze options strategies using Massive's options data. Use when building Massive-backed options screeners, Greek-aware analysis, or multi-leg strategies. Do not use for generic investing advice or non-Massive tooling.
 ---
 
 # Build an options strategy
@@ -8,6 +8,8 @@ description: Build and analyze options strategies using Massive's options data. 
 Strategy: $0
 Underlying: $1 (default: SPY if not specified)
 Language: infer from context, default to Python if not specified.
+
+Prefer official Massive SDK methods and live expiration windows. Do not hardcode expired contracts or invent chain fields that are not documented in the SDK patterns below.
 
 ## Plan tier check (run BEFORE scaffolding)
 

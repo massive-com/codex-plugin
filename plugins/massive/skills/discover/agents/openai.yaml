@@ -1,4 +1,4 @@
 interface:
-  display_name: "Discover"
+  display_name: "Massive Discover"
   short_description: "Find the right Massive API endpoint for a financial data task"
-  default_prompt: "Use $discover to find the right Massive endpoint. Describe the data you need (e.g. options Greeks for SPY, daily aggregates for AAPL)."
+  default_prompt: "Use $massive-discover to find the right Massive endpoint. Describe the data you need (e.g. options Greeks for SPY, daily aggregates for AAPL)."

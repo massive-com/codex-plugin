@@ -1,11 +1,13 @@
 ---
-name: debug
-description: Debug Massive API errors, unexpected responses, or SDK issues. Use when API calls return errors, data looks wrong, pagination isn't working, or the SDK behaves unexpectedly.
+name: massive-debug
+description: Debug Massive API errors, unexpected responses, or SDK issues. Use when the failing code, HTTP error, or confusing behavior involves Massive. Do not use for generic app bugs unrelated to Massive.
 ---
 
 # Debug Massive API issue
 
 Read the user's code and error output, then diagnose the issue. Detect the language from the code and provide fixes in the same language.
+
+When current endpoint names, parameters, or plan access details matter, prefer the bundled Massive MCP tools over memory. If those tools are unavailable, say current verification is unavailable and avoid inventing exact endpoint details.
 
 ## Common error patterns (all languages)
 
@@ -31,7 +33,7 @@ Read the user's code and error output, then diagnose the issue. Detect the langu
   - Forex needs `C:` prefix (`C:EURUSD`, not `EURUSD`)
   - Indices need `I:` prefix (`I:SPX`, not `SPX`)
 - Wrong endpoint URL or method name in SDK.
-- Use `search_endpoints` to find the correct endpoint.
+- Use `search_endpoints` to find the correct endpoint. If the tool is unavailable, say you cannot verify the current endpoint name and focus on the SDK-side fix instead of guessing.
 
 ### HTTP 429 Too Many Requests / rate limited
 - Basic plan is limited to **5 API calls/min**. Starter and above have unlimited calls, but bursts can still trigger throttling.

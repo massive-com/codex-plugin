@@ -1,12 +1,14 @@
 ---
-name: scaffold
-description: Scaffold a new Massive API project with dependency files, .env setup, and boilerplate code. Use when creating a new project, demo, or example that uses Massive's financial data APIs.
+name: massive-scaffold
+description: Scaffold a new Massive API project with dependency files, .env setup, and boilerplate code. Use when creating a new app, demo, or example that will call Massive APIs. Do not use for unrelated project scaffolding.
 ---
 
 # Scaffold a new Massive project
 
 Create a new project called `$0` of type `$1` (default: `rest` if not specified).
 Language: `$2` (default: `python` if not specified). Infer from context if the user mentions a language or SDK.
+
+Prefer official Massive SDK packages and methods from this skill and `AGENTS.md`. Do not invent unofficial packages, endpoints, or auth flows.
 
 ## Project types
 

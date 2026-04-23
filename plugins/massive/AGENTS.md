@@ -11,6 +11,13 @@ Massive is a financial data API platform providing accurate, real-time pricing d
 **Base URL:** `https://api.massive.com`
 **Auth:** API key passed via `Authorization: Bearer <key>` header, or via SDK constructor/environment variable.
 
+## Reliability protocol
+
+- Prefer the bundled Massive MCP tools and current Massive docs for endpoint names, parameters, and other details that can drift over time.
+- Use this `AGENTS.md` for stable guidance: ticker formats, SDK naming, auth patterns, plan tiers, pagination behavior, and common pitfalls.
+- If live endpoint lookup is unavailable, say that current verification is unavailable and avoid inventing routes, parameters, plan entitlements, or SDK behavior.
+- Prefer official Massive SDK methods over raw HTTP whenever the SDK already covers the workflow.
+
 ## Ticker conventions
 
 - Equities: plain symbols (`AAPL`, `MSFT`, `NVDA`, `TSLA`)

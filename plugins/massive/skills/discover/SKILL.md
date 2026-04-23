@@ -1,11 +1,14 @@
 ---
-name: discover
-description: Find the right Massive API endpoint for a financial data task. Use when the user needs to find which endpoint returns specific market data, or when exploring what data is available for a given asset class or use case.
+name: massive-discover
+description: Find the right Massive API endpoint for a financial data task. Use when the user needs current Massive endpoint selection, parameter guidance, or SDK examples. Do not use for non-Massive APIs or general market commentary.
 ---
 
 # Find the right Massive endpoint
 
 The user needs: $ARGUMENTS
+
+Before answering:
+- If `search_endpoints` or `get_endpoint_docs` is unavailable, explain that current endpoint verification requires the bundled Massive MCP server. Do not guess current endpoint names or parameters from memory.
 
 ## Process
 

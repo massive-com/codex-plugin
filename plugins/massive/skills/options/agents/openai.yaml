@@ -1,4 +1,4 @@
 interface:
-  display_name: "Options Strategy"
+  display_name: "Massive Options"
   short_description: "Build options strategies with Greeks, IV, and risk/reward analysis"
-  default_prompt: "Use $options to build an options strategy (covered call, iron condor, vertical spread, custom screener) using Massive's chain snapshot with Greeks and IV."
+  default_prompt: "Use $massive-options to build an options strategy (covered call, iron condor, vertical spread, custom screener) using Massive's chain snapshot with Greeks and IV."

@@ -1,9 +1,10 @@
 {
   "name": "massive",
-  "version": "0.1.0",
-  "description": "Massive financial data API plugin. Adds API knowledge, endpoint discovery, project scaffolding, and auto-configured MCP tools for building with Massive's REST and WebSocket APIs across equities, options, crypto, forex, indices, and futures.",
+  "version": "0.2.0",
+  "description": "AI coding helper for building correct Massive API integrations faster. Adds grounded API knowledge, endpoint discovery, project scaffolding, and MCP-backed verification for Massive's REST and WebSocket APIs.",
   "author": {
     "name": "Massive",
+    "email": "support@massive.com",
     "url": "https://massive.com"
   },
   "homepage": "https://massive.com/docs",
@@ -25,8 +26,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Massive",
-    "shortDescription": "Financial data API for equities, options, crypto, forex, indices, futures",
-    "longDescription": "Adds API knowledge, endpoint discovery, project scaffolding, and auto-configured MCP tools for building with Massive's REST and WebSocket APIs. Includes five skills: scaffold new projects, discover endpoints, debug errors, build options strategies, and build Streamlit dashboards.",
+    "shortDescription": "Build correct Massive integrations faster with AI help",
+    "longDescription": "Helps Codex and other AI coding workflows produce more reliable Massive integrations by combining stable SDK guidance, live endpoint grounding through MCP, and focused skills for scaffolding, discovery, debugging, options workflows, and dashboards.",
     "developerName": "Massive",
     "category": "Developer Tools",
     "capabilities": [
@@ -34,10 +35,15 @@
       "Write"
     ],
     "websiteURL": "https://massive.com",
+    "privacyPolicyURL": "https://massive.com/legal/privacy",
+    "termsOfServiceURL": "https://massive.com/legal/terms",
     "defaultPrompt": [
-      "Use $scaffold to create a new Massive project",
-      "Use $discover to find the right Massive endpoint for your data need",
-      "Use $options to build an options strategy with Greeks"
-    ]
+      "Use $massive-scaffold to create a new Massive project with the right SDK and .env setup.",
+      "Use $massive-discover to find the right Massive endpoint and show SDK usage for the target language.",
+      "Use $massive-debug to diagnose a Massive API or SDK issue without guessing current endpoint details."
+    ],
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
+    "screenshots": []
   }
 }
