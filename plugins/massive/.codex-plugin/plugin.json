@@ -1,7 +1,7 @@
 {
   "name": "massive",
-  "version": "0.2.0",
-  "description": "AI coding helper for building correct Massive API integrations faster. Adds grounded API knowledge, endpoint discovery, project scaffolding, and MCP-backed verification for Massive's REST and WebSocket APIs.",
+  "version": "0.1.0",
+  "description": "AI coding helper for building correct Massive API integrations faster. Loads grounded SDK knowledge and five focused skills (scaffold, discover, debug, options, dashboard). Pairs with the Massive MCP server (installed separately) for live API grounding.",
   "author": {
     "name": "Massive",
     "email": "support@massive.com",
@@ -19,11 +19,9 @@
     "crypto",
     "forex",
     "indices",
-    "futures",
-    "mcp"
+    "futures"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Massive",
     "shortDescription": "Build correct Massive integrations faster with AI help",

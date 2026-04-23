@@ -402,14 +402,15 @@ All projects follow the same pattern: dependency file, entry point, `.env.exampl
 
 ## MCP server workflow
 
-The Massive MCP server exposes four composable tools. Use them in this order:
+The Massive MCP server, when registered, exposes three composable tools. Use them in this order:
 
-1. `search_endpoints(query, scope)` - find relevant endpoints by natural language query. `scope`: `endpoints`, `functions`, or `all`.
-2. `get_endpoint_docs(docs_url)` - get full parameter docs for a specific endpoint (use the `docs_url` from search results).
-3. `call_api(endpoint, params, store_as, apply)` - call any REST endpoint; use `store_as` to save results as a DataFrame.
-4. `query_data(sql, apply)` - run SQL (SQLite) against stored DataFrames.
+1. `search_endpoints(query, scope)` - find relevant endpoints by natural language query; returns endpoint metadata including docs URLs. `scope`: `endpoints`, `functions`, or `all`. For full parameter specifications, fetch the authoritative catalog at `https://massive.com/docs/rest/llms-full.txt`.
+2. `call_api(endpoint, params, store_as, apply)` - call any REST endpoint; use `store_as` to save results as a DataFrame.
+3. `query_data(sql, apply)` - run SQL (SQLite) against stored DataFrames.
 
 Built-in financial functions available via `apply` parameter on `call_api` and `query_data`: Black-Scholes (`bs_price`, `bs_delta`, `bs_gamma`, `bs_theta`, `bs_vega`, `bs_rho`), returns (`simple_return`, `log_return`, `cumulative_return`, `sharpe_ratio`, `sortino_ratio`), technicals (`sma`, `ema`).
+
+The MCP server is **not bundled with this plugin**. Users install it once globally (`uv tool install git+https://github.com/massive-com/mcp_massive`) and register it with Codex (`codex mcp add massive --env MASSIVE_API_KEY=... -- mcp_massive`). Skills that reference `mcp__massive__*` tools gracefully degrade when the MCP server isn't registered, falling back to knowledge from this file.
 
 ## Documentation
 
