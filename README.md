@@ -1,8 +1,6 @@
-# Massive Codex Plugin
+<img src="images/logo_new.png" alt="Massive" width="100%"/>
 
-<div align="center">
-  <img src="./images/logo_new.png" alt="Massive" width="100%"/>
-</div>
+# Massive Codex Plugin
 
 This plugin helps Codex and similar coding assistants use Massive correctly when you're building or debugging integrations. It bundles Massive-specific guidance, reusable workflows, and MCP-based API lookup so the model can check the current API instead of guessing.
 
@@ -128,4 +126,8 @@ Remaining work is mostly publish polish, screenshots/icons, and a final reinstal
 
 ## License
 
-MIT
+MIT.
+
+## Disclaimer
+
+Educational material, not investment advice or a recommendation to buy or sell any security. Massive is a market data provider, not a broker-dealer, exchange, or investment adviser. Market data may originate from third-party exchanges and data providers, or may be derived or calculated by Massive; in either case, it is subject to the terms of your Massive subscription. The data and code samples are provided as-is, without warranty of accuracy, completeness, or timeliness. You're responsible for your use of the data and for compliance with all applicable laws and data licensing terms.
