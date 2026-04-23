@@ -1,8 +1,6 @@
 ---
 name: options
 description: Build and analyze options strategies using Massive's options data. Supports covered calls, iron condors, spreads, and custom strategies. Use when building options screeners, analyzing Greeks, or constructing multi-leg strategies.
-argument-hint: "[strategy] [underlying ticker] [language: python|javascript|typescript|go|kotlin]"
-allowed-tools: mcp__massive__search_endpoints mcp__massive__get_endpoint_docs mcp__massive__call_api mcp__massive__query_data Write Edit Bash Read
 ---
 
 # Build an options strategy
@@ -291,4 +289,4 @@ Built-in financial functions available via `apply` parameter: Black-Scholes (`bs
    e. Prints results with risk/reward metrics.
 6. Write README.md (include a line stating the required plan tier).
 7. Provide quickstart: `cd <project>`, `cp .env.example .env`, install, run.
-8. Restate the minimum plan tier (Options Starter or above for Greeks/IV) and suggest `/massive:debug` if the user hits errors.
+8. Restate the minimum plan tier (Options Starter or above for Greeks/IV) and suggest `$debug` if the user hits errors.

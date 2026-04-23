@@ -1,9 +1,6 @@
 ---
 name: dashboard
 description: Scaffold a Streamlit-based financial dashboard using Massive APIs. Use when building market data visualizations, multi-asset dashboards, or real-time monitoring interfaces.
-argument-hint: "[project-name] [focus: multi-asset|options|crypto|macro]"
-disable-model-invocation: false
-allowed-tools: Write Edit Bash Read
 ---
 
 # Scaffold a Streamlit financial dashboard

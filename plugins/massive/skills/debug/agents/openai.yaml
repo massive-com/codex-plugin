@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debug"
+  short_description: "Diagnose Massive API errors, empty results, and SDK issues"
+  default_prompt: "Use $debug to diagnose a Massive API error or unexpected response. Paste the error message or describe the issue."

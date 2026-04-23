@@ -1,8 +1,6 @@
 ---
 name: discover
 description: Find the right Massive API endpoint for a financial data task. Use when the user needs to find which endpoint returns specific market data, or when exploring what data is available for a given asset class or use case.
-argument-hint: "[description of data needed]"
-allowed-tools: mcp__massive__search_endpoints mcp__massive__get_endpoint_docs Read
 ---
 
 # Find the right Massive endpoint

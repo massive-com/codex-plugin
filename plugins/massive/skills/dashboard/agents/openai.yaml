@@ -1,0 +1,4 @@
+interface:
+  display_name: "Streamlit Dashboard"
+  short_description: "Scaffold a Streamlit financial dashboard with modular architecture"
+  default_prompt: "Use $dashboard to scaffold a Streamlit dashboard for multi-asset, options, crypto, or macro data with cached API calls and Plotly charts."

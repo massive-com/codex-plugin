@@ -8,7 +8,7 @@
       "name": "massive",
       "source": {
         "source": "local",
-        "path": "./"
+        "path": "./plugins/massive"
       },
       "policy": {
         "installation": "AVAILABLE",

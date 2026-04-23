@@ -1,6 +1,6 @@
 # Massive Codex Plugin — Port Plan
 
-This repo is a port of the [Massive Claude Code plugin](https://github.com/massive-com/claude-code-plugin) to OpenAI Codex. The skill structure, MCP server config, and API knowledge from the Claude Code plugin map almost 1:1 to Codex's plugin format.
+This repo is a port of the [Massive Claude Code plugin](https://github.com/massive-com/claude-code-plugin) to OpenAI Codex. The skill structure, MCP server config, and API knowledge translate almost 1:1.
 
 ## Why target Codex specifically
 
@@ -8,82 +8,93 @@ OpenAI has four surfaces where Massive could ship developer context, ranked by f
 
 | Option | Fit | Effort |
 |---|---|---|
-| **OpenAI Codex plugin** | **Best match.** Same skill format, MCP support, CLI install model. | ~1-2 days of porting and verification. |
+| **OpenAI Codex plugin** | **Best match.** Same skill format, MCP support, CLI install model. | ~1 day port + validation. |
 | ChatGPT Apps SDK (MCP Apps) | Different product: interactive UI inside consumer ChatGPT. Requires a hosted MCP server plus a web UI. | Weeks. Separate project. |
 | ChatGPT consumer Skills (emerging) | Reportedly Claude-compatible folder format; not GA for third-party authoring as of April 2026. | Wait-and-see. |
 | ChatGPT Custom GPTs | Text-only, no code execution, cannot bundle MCP. | Not worth it. |
 
-Codex is OpenAI's direct competitor to Claude Code: a coding CLI/agent with plugins, skills, and MCP support. The rest of this plan assumes Codex.
+Codex is OpenAI's direct competitor to Claude Code: a coding CLI with plugins, skills, and MCP support. The rest of this plan assumes Codex.
 
-## What translates directly
+## Verified conventions (from Codex CLI 0.123.0 and bundled reference plugins)
 
-- **Skill folder format.** Codex reads `skills/<name>/SKILL.md` with `name` + `description` frontmatter, exactly like Claude Code. Same progressive-disclosure pattern.
-- **MCP server.** `.mcp.json` configures MCP servers the same way. The Massive MCP server (`uvx mcp_massive@v0.9.0`) works as-is.
-- **API knowledge.** The content of `CLAUDE.md` becomes `AGENTS.md` at the repo root. AGENTS.md is a multi-vendor standard (Codex, Kilo Code, Roo, Warp, Factory, OpenCode).
-- **Plugin manifest concept.** `.codex-plugin/plugin.json` is the Codex equivalent of `.claude-plugin/plugin.json`. Most fields carry over.
+### Marketplace layout (NESTED)
 
-## File-by-file mapping
+The marketplace root contains:
 
-| Claude Code plugin | Codex plugin | Notes |
-|---|---|---|
-| `.claude-plugin/plugin.json` | `.codex-plugin/plugin.json` | Renamed dir. Schema similar but drop `userConfig` (not in Codex's documented schema) and add `interface` for UI metadata. |
-| `.claude-plugin/marketplace.json` | `.agents/plugins/marketplace.json` | Different path. Plugin source schema changes from `"source": "./"` to `"source": {"source": "local", "path": "./"}`. |
-| `.claude/CLAUDE.md` | `AGENTS.md` (repo root) | Moved up one directory. Content unchanged. |
-| `skills/<name>/SKILL.md` | `skills/<name>/SKILL.md` | Identical path. Minor frontmatter cleanup (see below). |
-| `.mcp.json` | `.mcp.json` | Env interpolation syntax differs. See "API key" below. |
-| `cross-tool/` | *(moved out)* | These become the standalone `massive-ai-rules` repo (Cursor, Copilot, Windsurf, Gemini, etc.). |
-| `README.md` | `README.md` | Rewritten for Codex install flow. |
-
-## Known differences that need verification
-
-### 1. API key prompting (`userConfig` replacement)
-The Claude Code plugin uses `userConfig` in `plugin.json` to prompt on install and interpolates the key via `${user_config.massive_api_key}` in `.mcp.json`.
-
-Codex's plugin.json schema does not publicly document a `userConfig` equivalent. The marketplace.json policy field `"authentication": "ON_INSTALL"` implies prompting exists, but the exact schema and interpolation variable are unclear.
-
-**Current placeholder:** This repo's `.mcp.json` uses `${MASSIVE_API_KEY}` env-var interpolation. Users must `export MASSIVE_API_KEY=...` before running Codex.
-
-**To resolve:** Install Codex locally, run the built-in `$plugin-creator` scaffolder against a hypothetical API-key-requiring plugin, and inspect what it emits.
-
-### 2. Skill frontmatter
-Our SKILL.md files include `argument-hint`, `disable-model-invocation`, and `allowed-tools`. Codex only documents `name` and `description` as required.
-
-**Current state:** The extra fields are retained (Codex may ignore them silently).
-
-**To resolve:** Determine if Codex accepts these fields. If not, move relevant metadata to `skills/<name>/agents/openai.yaml` (Codex's per-skill UI metadata file).
-
-### 3. Skill invocation syntax in cross-references
-Claude Code invokes skills as `/massive:discover`. Codex uses `$skill-name` or a `/skills` picker. The SKILL.md files here still reference `/massive:discover`, `/massive:debug`, etc. in prose.
-
-**To resolve:** Confirm Codex's invocation syntax, then global find-replace across all skill files.
-
-### 4. Marketplace layout
-The Codex docs show marketplace entries like:
-```json
-{"source": {"source": "local", "path": "./plugins/my-plugin"}}
 ```
-with paths relative to the marketplace root. If marketplace.json lives at `.agents/plugins/marketplace.json`, `./` resolves to that directory, not the repo root.
+<marketplace-root>/
+├── .agents/plugins/marketplace.json    # Marketplace catalog
+└── plugins/
+    └── <plugin-name>/
+        ├── .codex-plugin/plugin.json    # Plugin manifest
+        ├── .mcp.json                    # MCP server config (optional)
+        ├── .app.json                    # App/connector config (optional)
+        ├── AGENTS.md                    # Plugin-scoped agent instructions
+        └── skills/
+            └── <skill-name>/
+                ├── SKILL.md             # Required
+                └── agents/openai.yaml   # Optional UI metadata
+```
 
-Two viable layouts:
-- **Flat (current):** Plugin files at repo root, marketplace path `"./"`. Simpler, matches Claude Code.
-- **Nested:** Plugin files under `.agents/plugins/massive/`, marketplace path `"./massive/"`. More aligned with Codex examples.
+`marketplace.json` entries reference plugins via `source.path: "./plugins/<name>"` (paths relative to the marketplace root).
 
-**To resolve:** Test both layouts with local Codex install.
+Install a local marketplace with: `codex plugin marketplace add /path/to/repo`
 
-## Work remaining
+### plugin.json schema (resolved)
 
-1. Verify points 1-4 above against a real Codex install.
-2. Port skill files' inter-references and adjust frontmatter.
-3. Rewrite `README.md` with the verified Codex install command and quickstart.
-4. Update any "Claude Code" or "Claude" phrasing in AGENTS.md and skills to be assistant-agnostic.
-5. Test end-to-end: install locally, confirm skills appear, confirm MCP server spawns and answers a live API call.
-6. Publish: push to `github.com/massive-com/codex-plugin`, update the plugin's `repository` field, and follow Codex marketplace submission.
+Required: `name` (kebab-case), `version`, `description`.
+
+Optional: `author`, `homepage`, `repository`, `license`, `keywords`, `skills`, `mcpServers`, `apps`, `interface`.
+
+The `interface` block holds UI metadata: `displayName`, `shortDescription`, `longDescription`, `developerName`, `category`, `capabilities` (e.g., `["Interactive", "Write"]`), `websiteURL`, `privacyPolicyURL`, `termsOfServiceURL`, `logo`, `defaultPrompt` (array), `brandColor`, `screenshots`.
+
+**There is no `userConfig` field.** For API-key auth, use env-var interpolation in `.mcp.json` (e.g., `${MASSIVE_API_KEY}`) and document the env-var requirement in the README.
+
+For OAuth-backed connectors (like the bundled GitHub plugin), auth happens via `.app.json` with a `connector_*` ID provisioned by OpenAI. That path requires OpenAI infrastructure and does not apply to third-party API-key plugins.
+
+### SKILL.md frontmatter (resolved)
+
+Only `name` and `description` are supported in frontmatter. Claude Code's `argument-hint`, `disable-model-invocation`, and `allowed-tools` are not part of the Codex spec and have been stripped from our skills.
+
+UI metadata (display name, icons, default prompts) goes in `skills/<name>/agents/openai.yaml`:
+
+```yaml
+interface:
+  display_name: "Scaffold"
+  short_description: "..."
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon.png"
+  default_prompt: "Use $scaffold to create a new Massive project."
+```
+
+### Skill invocation syntax
+
+Users invoke skills with `$<skill-name>` (e.g., `$scaffold`, `$discover`). All cross-references in our SKILL.md files have been rewritten from `/massive:X` to `$X`.
+
+Inter-skill routing uses relative paths: `../<other-skill>/SKILL.md`.
+
+## File-by-file mapping from Claude Code
+
+| Claude Code plugin | Codex plugin |
+|---|---|
+| `.claude-plugin/plugin.json` | `plugins/massive/.codex-plugin/plugin.json` |
+| `.claude-plugin/marketplace.json` | `.agents/plugins/marketplace.json` |
+| `.claude/CLAUDE.md` | `plugins/massive/AGENTS.md` |
+| `skills/<name>/SKILL.md` | `plugins/massive/skills/<name>/SKILL.md` (+ optional `agents/openai.yaml`) |
+| `.mcp.json` | `plugins/massive/.mcp.json` |
+| `cross-tool/` | *moved to standalone `massive-ai-rules` repo* |
+
+## Remaining work
+
+1. **Enable the plugin end-to-end.** `codex plugin marketplace add .` registers the marketplace; verify the plugin enables and that `$scaffold`, `$discover`, `$debug`, `$options`, `$dashboard` all appear. (Currently the marketplace is registered locally; need to complete the enable flow.)
+2. **Live API call test.** Export `MASSIVE_API_KEY` and confirm the MCP server spawns and answers an end-to-end call.
+3. **Polish.** Add plugin logo and icons to the `interface` block. Decide whether to prefix skill names (`massive-scaffold` etc.) to avoid collisions with other plugins' generic-name skills.
+4. **Bump to v1.0.0** in `plugin.json` once tests pass.
+5. **Publish to GitHub.** Push to `github.com/massive-com/codex-plugin`.
 
 ## Source-of-truth strategy
 
-Rather than duplicating the full API surface in AGENTS.md (and in every other AI tool's rules file), treat `https://massive.com/docs/rest/llms-full.txt` and `https://massive.com/docs/llms.txt` as authoritative. The AGENTS.md in this repo covers SDK patterns, gotchas, and plan tiers (things that don't change per endpoint). When Codex needs current endpoint details, it should fetch `llms-full.txt`.
-
-This is the same strategy used in the planned `massive-ai-rules` repo. Once llms.txt is referenced uniformly, drift across tool-specific rule files drops to near-zero.
+The AGENTS.md in this plugin contains SDK patterns, gotchas, and plan tiers (the stable stuff). For current endpoint details, Codex fetches `https://massive.com/docs/rest/llms-full.txt`. Same strategy as the `massive-ai-rules` repo — drift across tool-specific files drops to near-zero because the website is the authoritative source.
 
 ## References
 

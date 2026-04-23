@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scaffold"
+  short_description: "Create a new Massive API project with working boilerplate"
+  default_prompt: "Use $scaffold to create a new Massive project. Args: [project-name] [type: rest|websocket|streamlit] [language: python|javascript|typescript|go|kotlin]"

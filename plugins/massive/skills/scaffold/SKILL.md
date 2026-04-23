@@ -1,9 +1,6 @@
 ---
 name: scaffold
 description: Scaffold a new Massive API project with dependency files, .env setup, and boilerplate code. Use when creating a new project, demo, or example that uses Massive's financial data APIs.
-argument-hint: "[project-name] [type: rest|websocket|streamlit] [language: python|javascript|typescript|go|kotlin]"
-disable-model-invocation: false
-allowed-tools: Write Edit Bash
 ---
 
 # Scaffold a new Massive project
@@ -482,4 +479,4 @@ For WebSocket and Streamlit project types, the user will need at least a Starter
    ```
    Then the language-specific install and run commands.
 5. State the minimum plan tier needed for the project type (repeat even if already mentioned in step 1).
-6. Point to follow-up skills: `/massive:discover` to find endpoints, `/massive:debug` if errors arise.
+6. Point to follow-up skills: `$discover` to find endpoints, `$debug` if errors arise.
