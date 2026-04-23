@@ -59,10 +59,10 @@ Skip steps 1 and 2 if you don't need live-API features. The plugin's knowledge a
 
 ### 2. Register the MCP server with Codex (optional)
 
+If you use the MCP server, register it with Codex and pass your Massive API key as the `MASSIVE_API_KEY` value:
+
 ```bash
-read -rsp "Massive API key: " MASSIVE_API_KEY; echo
-codex mcp add massive --env MASSIVE_API_KEY="$MASSIVE_API_KEY" -- mcp_massive
-unset MASSIVE_API_KEY
+codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- mcp_massive
 ```
 
 This writes the server entry into `~/.codex/config.toml`. The key persists across shells and reboots. Rotate the key later with `codex mcp remove massive` followed by the same `add` command with the new value.
