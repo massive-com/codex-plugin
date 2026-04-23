@@ -45,31 +45,7 @@ This is an integration-development plugin. Runtime market data access comes thro
 
 Validated on `2026-04-23` with `codex-cli 0.123.0`.
 
-### 1. Install the Massive MCP server (optional)
-
-For live endpoint verification, install the [Massive MCP server](https://github.com/massive-com/mcp_massive) once as a shared `uv` tool. It's reused across Codex, Claude Code, and any other MCP-aware harness:
-
-```bash
-uv tool install git+https://github.com/massive-com/mcp_massive
-```
-
-Upgrade later with `uv tool upgrade mcp-massive`. For advanced install options, see the [mcp_massive repo](https://github.com/massive-com/mcp_massive).
-
-Skip steps 1 and 2 if you don't need live-API features. The plugin's knowledge and skills still work standalone.
-
-### 2. Register the MCP server with Codex (optional)
-
-If you use the MCP server, register it with Codex and pass your Massive API key as the `MASSIVE_API_KEY` value:
-
-```bash
-codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- mcp_massive
-```
-
-This writes the server entry into `~/.codex/config.toml`. The key persists across shells and reboots. Rotate the key later with `codex mcp remove massive` followed by the same `add` command with the new value.
-
-The plugin itself does not prompt for or store a Massive API key during install. Live API features use the separately registered MCP server and its `MASSIVE_API_KEY` environment value.
-
-### 3. Install the plugin
+### Install the plugin
 
 Git-backed install once the repo is public:
 
@@ -85,13 +61,45 @@ codex plugin marketplace add .
 
 Then restart Codex, open the plugin browser with `/plugins`, and install `Massive Market Data` from the `Massive Market Data` marketplace.
 
-### 4. Verify
+### Optional MCP setup
 
-Inside a Codex session:
+The plugin declares the Massive MCP server in its manifest, so installing the plugin registers the server with Codex automatically. You still install the server binary yourself (it is shared across tools and not bundled into the plugin).
+
+Install the [Massive MCP server](https://github.com/massive-com/mcp_massive) once as a shared `uv` tool:
+
+```bash
+uv tool install "mcp_massive @ git+https://github.com/massive-com/mcp_massive"
+```
+
+Confirm the server command is available:
+
+```bash
+command -v mcp_massive
+```
+
+Upgrade later with `uv tool upgrade mcp-massive`. Uninstall with `uv tool uninstall mcp-massive`. For advanced install options, see the [mcp_massive repo](https://github.com/massive-com/mcp_massive).
+
+Open `/plugins` → **MCPs** tab → **Massive** → gear icon, then paste your key into the `MASSIVE_API_KEY` environment variable field and save. If Codex cannot launch the server (it does not always inherit your shell `PATH`), paste the absolute path from `command -v mcp_massive` into the **Command to launch** field.
+
+Rotate the key later by returning to the same settings panel.
+
+The plugin itself does not prompt for or store a Massive API key during install. The key is saved in your local Codex MCP config.
+
+### Verify
+
+Check that the MCP server is registered:
+
+```bash
+codex mcp list
+```
+
+The `massive` server should be enabled. In a new Codex session, the MCP tools are available as `search_endpoints`, `call_api`, and `query_data`.
+
+Check the plugin:
 
 - Invoke a skill: `Use $massive-discover to find the right Massive endpoint for daily AAPL aggregates in Python.`
-- If MCP is registered, Codex verifies endpoint metadata against the live server via `search_endpoints`.
-- If MCP is not registered, Codex answers from AGENTS.md knowledge and notes that it couldn't verify the latest metadata.
+- If the MCP key is set, Codex verifies endpoint metadata against the live server via `search_endpoints`.
+- If the key is missing or the server cannot launch, Codex answers from AGENTS.md knowledge and notes that it couldn't verify the latest metadata.
 
 ## Quick smoke test
 

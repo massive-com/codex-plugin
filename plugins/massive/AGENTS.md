@@ -410,7 +410,7 @@ The Massive MCP server, when registered, exposes three composable tools. Use the
 
 Built-in financial functions available via `apply` parameter on `call_api` and `query_data`: Black-Scholes (`bs_price`, `bs_delta`, `bs_gamma`, `bs_theta`, `bs_vega`, `bs_rho`), returns (`simple_return`, `log_return`, `cumulative_return`, `sharpe_ratio`, `sortino_ratio`), technicals (`sma`, `ema`).
 
-The MCP server is **not bundled with this plugin**. Users install it once globally (`uv tool install git+https://github.com/massive-com/mcp_massive`) and register it with Codex (`codex mcp add massive --env MASSIVE_API_KEY=... -- mcp_massive`). Skills that reference `mcp__massive__*` tools gracefully degrade when the MCP server isn't registered, falling back to knowledge from this file.
+The MCP server is **not bundled with this plugin**. Users install it once globally (`uv tool install "mcp_massive @ git+https://github.com/massive-com/mcp_massive"`) and register it with Codex using the resolved command path (`codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- "$(command -v mcp_massive)"`). Skills that reference `mcp__massive__*` tools gracefully degrade when the MCP server isn't registered, falling back to knowledge from this file.
 
 ## Documentation
 

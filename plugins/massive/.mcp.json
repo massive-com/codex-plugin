@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "massive": {
+      "command": "mcp_massive",
+      "env": {
+        "MASSIVE_API_KEY": ""
+      }
+    }
+  }
+}
