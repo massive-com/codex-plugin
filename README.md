@@ -43,11 +43,11 @@ This is an integration-development plugin. Runtime market data access comes thro
 
 ## Install
 
-Validated on `2026-04-23` with `codex-cli 0.123.0`.
+Validated on `2026-04-24` with `codex-cli 0.123.0`. The flow is fully CLI-driven until the final launch — no mid-flow restarts.
 
-### Install the plugin
+**Prerequisite:** `uv` must be installed and on your `PATH` (see [Requirements](#requirements)). The plugin's bundled MCP server is launched via `uvx`, which fetches and caches `mcp_massive` on first use.
 
-Git-backed install once the repo is public:
+### Step 1 — Add the marketplace
 
 ```bash
 codex plugin marketplace add massive-com/codex-plugin
@@ -59,29 +59,32 @@ For local development from a checkout of this repo:
 codex plugin marketplace add .
 ```
 
-Then restart Codex, open the plugin browser with `/plugins`, and install `Massive Market Data` from the `Massive Market Data` marketplace.
+### Step 2 — Install the plugin
 
-### MCP setup
-
-The plugin bundles the Massive MCP server declaration. Installing the plugin registers the `massive` MCP automatically; the server itself is fetched and cached by `uvx` on first launch. You only need to provide your API key.
-
-**Prerequisite:** `uv` must be installed and on your `PATH` (see [Requirements](#requirements)).
-
-After installing the plugin, register your Massive API key so the MCP can authenticate. This writes a user-level override to `~/.codex/config.toml` that takes precedence over the plugin's placeholder:
+Launch the Codex TUI and use the plugin browser:
 
 ```bash
-# macOS / Linux
-codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- uvx --from git+https://github.com/massive-com/mcp_massive mcp_massive
+codex
 ```
 
-```powershell
-# Windows (PowerShell)
+Then type `/plugins`, select `Massive Market Data`, and press Install. Exit the TUI.
+
+### Step 3 — Register your Massive API key
+
+This writes a user-level override to `~/.codex/config.toml` that wins over the plugin's placeholder MCP entry:
+
+```bash
+# macOS / Linux / Windows (PowerShell) — same command
 codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- uvx --from git+https://github.com/massive-com/mcp_massive mcp_massive
 ```
 
 The key persists across shells and reboots. Rotate it later with `codex mcp remove massive` followed by the same `add` command with the new value.
 
-If you prefer to set the key via your shell environment instead (useful when running `codex` from a terminal where `MASSIVE_API_KEY` is already exported), the bundled `.mcp.json` uses `env_vars: ["MASSIVE_API_KEY"]` and will pick up the shell value automatically. On macOS GUI launches of Codex, use `launchctl setenv MASSIVE_API_KEY your_key` to make the value visible to the app.
+### Step 4 — Open Codex
+
+Launch the Codex desktop app. On first open after the three CLI steps above, the plugin and MCP server both load together — no second open required. First MCP launch takes 5-10 seconds while `uvx` downloads and caches `mcp_massive`; subsequent launches start in ~1 second.
+
+**Alternate key path:** if you'd rather supply `MASSIVE_API_KEY` via your shell environment, skip step 3. The bundled `.mcp.json` uses `env_vars: ["MASSIVE_API_KEY"]` and picks up the exported value. For macOS GUI launches that don't inherit your shell env, use `launchctl setenv MASSIVE_API_KEY your_key` so the Codex app can see it.
 
 The plugin does not prompt for or store a Massive API key during install.
 
