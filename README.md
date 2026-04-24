@@ -67,7 +67,7 @@ Launch the Codex TUI and use the plugin browser:
 codex
 ```
 
-Then type `/plugins`, select `Massive Market Data`, and press Install. Exit the TUI.
+Then type `/plugins`, select `Massive Market Data`, and press Install. When the install finishes, type `/exit` to leave the TUI (Ctrl-C or closing the terminal is not enough — `/exit` flushes Codex's state cleanly).
 
 ### Step 3 — Register your Massive API key
 
