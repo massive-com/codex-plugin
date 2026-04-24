@@ -45,7 +45,10 @@ This is an integration-development plugin. Runtime market data access comes thro
 
 Validated on `2026-04-24` with `codex-cli 0.123.0`. The flow is fully CLI-driven until the final launch — no mid-flow restarts.
 
-**Prerequisite:** `uv` must be installed and on your `PATH` (see [Requirements](#requirements)). The plugin's bundled MCP server is launched via `uvx`, which fetches and caches `mcp_massive` on first use.
+**Prerequisites** (see full [Requirements](#requirements) below):
+- **Codex CLI** — every install command below runs through it.
+- **Codex desktop app** — where you use the plugin day-to-day (macOS/Windows). Linux users can use the Codex TUI instead.
+- **uv** — installed and on your `PATH`. The plugin's bundled MCP is launched via `uvx`, which fetches and caches `mcp_massive` on first use.
 
 ### Step 1 — Add the marketplace
 
@@ -123,7 +126,8 @@ Codex uses an installed copy of the plugin from its plugin cache rather than rea
 
 ## Requirements
 
-- OpenAI Codex CLI
+- **[OpenAI Codex CLI](https://developers.openai.com/codex/quickstart)** — required for every install command below. Install with `npm install -g @openai/codex` or `brew install codex`. Runs on macOS, Windows, and Linux.
+- **OpenAI Codex desktop app** — where the plugin's UI, skills, and MCP tools run in your day-to-day sessions. Download from [developers.openai.com/codex](https://developers.openai.com/codex/quickstart). Available on macOS and Windows; Linux users can use the CLI TUI (`codex` in a terminal) instead.
 - [uv](https://docs.astral.sh/uv/), used by the plugin's bundled `.mcp.json` to launch the Massive MCP server via `uvx`. Check with `uv --version`. Install with `curl -LsSf https://astral.sh/uv/install.sh | sh` (macOS or Linux), `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"` (Windows), or `pip install uv` (any platform).
 - Python 3.12+ (fetched automatically by `uvx` on first MCP launch if not already present)
 - A Massive API key from [massive.com/dashboard](https://massive.com/dashboard)
