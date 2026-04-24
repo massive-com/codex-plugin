@@ -74,7 +74,13 @@ uv tool install "mcp_massive @ git+https://github.com/massive-com/mcp_massive"
 Confirm the server command is available:
 
 ```bash
+# macOS / Linux
 command -v mcp_massive
+```
+
+```powershell
+# Windows (PowerShell)
+(Get-Command mcp_massive).Source
 ```
 
 Upgrade later with `uv tool upgrade mcp-massive`. Uninstall with `uv tool uninstall mcp-massive`. For advanced install options, see the [mcp_massive repo](https://github.com/massive-com/mcp_massive).
@@ -84,7 +90,13 @@ Upgrade later with `uv tool upgrade mcp-massive`. Uninstall with `uv tool uninst
 Register the server with Codex and pass your Massive API key as the `MASSIVE_API_KEY` value:
 
 ```bash
+# macOS / Linux
 codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- "$(command -v mcp_massive)"
+```
+
+```powershell
+# Windows (PowerShell)
+codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- (Get-Command mcp_massive).Source
 ```
 
 This writes the server entry into `~/.codex/config.toml`. The key persists across shells and reboots. Rotate the key later with `codex mcp remove massive` followed by the same `add` command with the new value.
@@ -127,7 +139,7 @@ Codex uses an installed copy of the plugin from its plugin cache rather than rea
 ## Requirements
 
 - OpenAI Codex CLI
-- [uv](https://docs.astral.sh/uv/), to install the Massive MCP server (only needed for live-API features)
+- [uv](https://docs.astral.sh/uv/), to install the Massive MCP server (only needed for live-API features). Check with `uv --version`. Install with `curl -LsSf https://astral.sh/uv/install.sh | sh` (macOS or Linux), `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"` (Windows), or `pip install uv` (any platform).
 - Python 3.12+ (required by the MCP server; the Python SDK itself supports 3.9+)
 - A Massive API key from [massive.com/dashboard](https://massive.com/dashboard)
 
