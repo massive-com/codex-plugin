@@ -39,7 +39,7 @@
     "defaultPrompt": [
       "Use $massive-scaffold to bootstrap a Massive API project with SDK dependencies and environment setup.",
       "Use $massive-discover to identify the Massive endpoint, parameters, and SDK call for a market data task.",
-      "Use $massive-debug to troubleshoot a Massive API or SDK issue, including auth, plan access, pagination, and response-shape problems."
+      "Use $massive-debug to troubleshoot a Massive API or SDK issue: auth, plan access, pagination, response shapes."
     ],
     "brandColor": "#1E63F5",
     "composerIcon": "./assets/icon.png",

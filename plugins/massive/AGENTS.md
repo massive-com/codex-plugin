@@ -11,6 +11,23 @@ Massive is a financial data API platform providing accurate, real-time pricing d
 **Base URL:** `https://api.massive.com`
 **Auth:** API key passed via `Authorization: Bearer <key>` header, or via SDK constructor/environment variable.
 
+## Contents
+
+- [Reliability protocol](#reliability-protocol)
+- [Ticker conventions](#ticker-conventions)
+- [Python SDK patterns](#python-sdk-patterns)
+- [JavaScript/TypeScript SDK patterns](#javascripttypescript-sdk-patterns)
+- [Go SDK patterns](#go-sdk-patterns)
+- [Kotlin/JVM SDK patterns](#kotlinjvm-sdk-patterns)
+- [SDK method name cross-reference](#sdk-method-name-cross-reference)
+- [REST API coverage](#rest-api-coverage)
+- [WebSocket streaming](#websocket-streaming)
+- [Plans and data access](#plans-and-data-access)
+- [Common gotchas](#common-gotchas)
+- [Project structure](#project-structure)
+- [MCP server workflow](#mcp-server-workflow)
+- [Documentation](#documentation)
+
 ## Reliability protocol
 
 - Prefer the bundled Massive MCP tools and current Massive docs for endpoint names, parameters, and other details that can drift over time.

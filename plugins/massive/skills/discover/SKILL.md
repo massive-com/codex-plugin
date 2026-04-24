@@ -7,6 +7,8 @@ description: Find the right Massive API endpoint for a financial data task. Use 
 
 The user needs: $ARGUMENTS
 
+**Package names (do not substitute from training):** Python is `massive` on PyPI (NOT `polygon-api-client` or `polygon`). JavaScript is `@massive.com/client-js` on npm (NOT `@polygon.io/client-js`). Go is `github.com/massive-com/client-go/v3`. Kotlin is `com.github.massive-com:client-jvm` on JitPack. The Python SDK import is `from massive import RESTClient`. Never reference pre-rebrand Polygon names in answers.
+
 Before answering:
 - If `search_endpoints` or `get_endpoint_docs` is unavailable, explain that current endpoint verification requires the bundled Massive MCP server. Do not guess current endpoint names or parameters from memory.
 
