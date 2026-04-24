@@ -61,47 +61,29 @@ codex plugin marketplace add .
 
 Then restart Codex, open the plugin browser with `/plugins`, and install `Massive Market Data` from the `Massive Market Data` marketplace.
 
-### Optional MCP setup
+### MCP setup
 
-The Massive MCP server is independent of this plugin. You can install and register it before or after installing the plugin, or use it without the plugin. The plugin works without MCP; MCP adds live endpoint verification.
+The plugin bundles the Massive MCP server declaration. Installing the plugin registers the `massive` MCP automatically; the server itself is fetched and cached by `uvx` on first launch. You only need to provide your API key.
 
-Install the [Massive MCP server](https://github.com/massive-com/mcp_massive) once as a shared `uv` tool. This matches the current `mcp_massive` README:
+**Prerequisite:** `uv` must be installed and on your `PATH` (see [Requirements](#requirements)).
 
-```bash
-uv tool install "mcp_massive @ git+https://github.com/massive-com/mcp_massive"
-```
-
-Confirm the server command is available:
+After installing the plugin, register your Massive API key so the MCP can authenticate. This writes a user-level override to `~/.codex/config.toml` that takes precedence over the plugin's placeholder:
 
 ```bash
 # macOS / Linux
-command -v mcp_massive
+codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- uvx --from git+https://github.com/massive-com/mcp_massive mcp_massive
 ```
 
 ```powershell
 # Windows (PowerShell)
-(Get-Command mcp_massive).Source
+codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- uvx --from git+https://github.com/massive-com/mcp_massive mcp_massive
 ```
 
-Upgrade later with `uv tool upgrade mcp-massive`. Uninstall with `uv tool uninstall mcp-massive`. For advanced install options, see the [mcp_massive repo](https://github.com/massive-com/mcp_massive).
+The key persists across shells and reboots. Rotate it later with `codex mcp remove massive` followed by the same `add` command with the new value.
 
-`codex mcp add` does not install the MCP server. It writes a Codex server entry that launches the already installed `mcp_massive` command. Use the resolved command path so Codex desktop can launch the server even when it does not inherit your shell `PATH`.
+If you prefer to set the key via your shell environment instead (useful when running `codex` from a terminal where `MASSIVE_API_KEY` is already exported), the bundled `.mcp.json` uses `env_vars: ["MASSIVE_API_KEY"]` and will pick up the shell value automatically. On macOS GUI launches of Codex, use `launchctl setenv MASSIVE_API_KEY your_key` to make the value visible to the app.
 
-Register the server with Codex and pass your Massive API key as the `MASSIVE_API_KEY` value:
-
-```bash
-# macOS / Linux
-codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- "$(command -v mcp_massive)"
-```
-
-```powershell
-# Windows (PowerShell)
-codex mcp add massive --env MASSIVE_API_KEY=YOUR_MASSIVE_API_KEY -- (Get-Command mcp_massive).Source
-```
-
-This writes the server entry into `~/.codex/config.toml`. The key persists across shells and reboots. Rotate the key later with `codex mcp remove massive` followed by the same `add` command with the new value.
-
-The plugin itself does not prompt for or store a Massive API key during install. Live API features use the separately installed and registered MCP server.
+The plugin does not prompt for or store a Massive API key during install.
 
 ### Verify
 
@@ -139,8 +121,8 @@ Codex uses an installed copy of the plugin from its plugin cache rather than rea
 ## Requirements
 
 - OpenAI Codex CLI
-- [uv](https://docs.astral.sh/uv/), to install the Massive MCP server (only needed for live-API features). Check with `uv --version`. Install with `curl -LsSf https://astral.sh/uv/install.sh | sh` (macOS or Linux), `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"` (Windows), or `pip install uv` (any platform).
-- Python 3.12+ (required by the MCP server; the Python SDK itself supports 3.9+)
+- [uv](https://docs.astral.sh/uv/), used by the plugin's bundled `.mcp.json` to launch the Massive MCP server via `uvx`. Check with `uv --version`. Install with `curl -LsSf https://astral.sh/uv/install.sh | sh` (macOS or Linux), `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"` (Windows), or `pip install uv` (any platform).
+- Python 3.12+ (fetched automatically by `uvx` on first MCP launch if not already present)
 - A Massive API key from [massive.com/dashboard](https://massive.com/dashboard)
 
 ## License

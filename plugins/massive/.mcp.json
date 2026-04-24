@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "massive": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/massive-com/mcp_massive",
+        "mcp_massive"
+      ],
+      "env_vars": ["MASSIVE_API_KEY"]
+    }
+  }
+}
