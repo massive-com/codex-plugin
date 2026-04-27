@@ -1,6 +1,6 @@
 {
   "name": "massive",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "Codex plugin for building Massive market data integrations. Includes SDK setup guidance, endpoint discovery workflows, debugging checklists, options workflows, and dashboard scaffolding. Can use the separately installed Massive MCP server for live endpoint verification.",
   "author": {
     "name": "Massive",
